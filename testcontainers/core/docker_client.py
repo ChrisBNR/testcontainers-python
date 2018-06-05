@@ -18,14 +18,14 @@ class DockerClient(object):
     def __init__(self):
         self.client = docker.from_env()
 
-    def run(self, image: str,
-            command: str = None,
-            environment: dict = None,
-            ports: dict = None,
-            detach: bool = False,
-            stdout: bool = True,
-            stderr: bool = False,
-            remove: bool = False, **kwargs) -> Container:
+    def run(self, image,
+            command= None,
+            environment = None,
+            ports = None,
+            detach = False,
+            stdout = True,
+            stderr = False,
+            remove = False, **kwargs):
         return self.client.containers.run(image,
                                           command=command,
                                           stdout=stdout,

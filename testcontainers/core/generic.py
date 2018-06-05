@@ -45,7 +45,7 @@ class DbContainer(DockerContainer):
 
     def start(self):
         self._configure()
-        super().start()
+        super(DbContainer,self).start()
         self._connect()
         return self
 

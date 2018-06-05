@@ -1,3 +1,4 @@
+
 import blindspin
 import crayons
 from docker.models.containers import Container
@@ -5,7 +6,6 @@ from docker.models.containers import Container
 from testcontainers.core.docker_client import DockerClient
 from testcontainers.core.exceptions import ContainerStartException
 from testcontainers.core.utils import is_windows
-
 
 class DockerContainer(object):
     def __init__(self, image):
@@ -18,16 +18,16 @@ class DockerContainer(object):
         self._command = None
         self._name = None
 
-    def with_env(self, key: str, value: str) -> 'DockerContainer':
+    def with_env(self, key, value):
         self.env[key] = value
         return self
 
-    def with_bind_ports(self, container: int,
-                        host: int = None) -> 'DockerContainer':
+    def with_bind_ports(self, container,
+                        host = None):
         self.ports[container] = host
         return self
 
-    def with_exposed_ports(self, *ports) -> 'DockerContainer':
+    def with_exposed_ports(self, *ports):
         for port in list(ports):
             self.ports[port] = None
         return self
@@ -59,37 +59,37 @@ class DockerContainer(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.stop()
 
-    def get_container_host_ip(self) -> str:
+    def get_container_host_ip(self):
         if is_windows():
             return "localhost"
         else:
             return "0.0.0.0"
 
-    def get_exposed_port(self, port) -> str:
+    def get_exposed_port(self, port):
         return self.get_docker_client().port(self._container.id, port)
 
-    def with_command(self, command: str) -> 'DockerContainer':
+    def with_command(self, command):
         self._command = command
         return self
 
-    def with_name(self, name: str) -> 'DockerContainer':
+    def with_name(self, name):
         self._name = name
         return self
 
-    def with_volume_mapping(self, host: str, container: str,
-                            mode: str = 'ro') -> 'DockerContainer':
+    def with_volume_mapping(self, host, container,
+                            mode = 'ro'):
         # '/home/user1/': {'bind': '/mnt/vol2', 'mode': 'rw'}
         mapping = {'bind': container, 'mode': mode}
         self.volumes[host] = mapping
         return self
 
-    def get_wrapped_contaner(self) -> Container:
+    def get_wrapped_contaner(self):
         return self._container
 
-    def get_docker_client(self) -> DockerClient:
+    def get_docker_client(self):
         return self._docker
 
-    def exec(self, command):
+    def execute(self, command):
         if not self._container:
             raise ContainerStartException("Container should be started before")
         return self.get_wrapped_contaner().exec_run(command)
