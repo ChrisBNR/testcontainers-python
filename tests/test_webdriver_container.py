@@ -2,7 +2,7 @@ from time import sleep
 
 import pytest
 from selenium.webdriver import DesiredCapabilities
-from testcontainers.selenium import BrowserWebDriverContainer
+from testcontainers.selenium_tc import BrowserWebDriverContainer
 
 
 @pytest.mark.parametrize("caps", [DesiredCapabilities.CHROME, DesiredCapabilities.FIREFOX])

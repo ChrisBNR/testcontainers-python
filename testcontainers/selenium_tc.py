@@ -11,7 +11,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 from selenium import webdriver
-from selenium.webdriver.remote.webdriver import WebDriver
 
 from testcontainers.core.container import DockerContainer
 from testcontainers.core.waiting_utils import wait_container_is_ready
@@ -46,10 +45,10 @@ class BrowserWebDriverContainer(DockerContainer):
             command_executor=(self.get_connection_url()),
             desired_capabilities=self.capabilities)
 
-    def get_driver(self) -> WebDriver:
+    def get_driver(self):
         return self._connect()
 
-    def get_connection_url(self) -> str:
+    def get_connection_url(self):
         ip = self.get_container_host_ip()
         port = self.get_exposed_port(self.port_to_expose)
         return 'http://{}:{}/wd/hub'.format(ip, port)
